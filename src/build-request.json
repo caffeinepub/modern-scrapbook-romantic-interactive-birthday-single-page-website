@@ -1,0 +1,245 @@
+{
+  "kind": "build_request",
+  "title": "Modern scrapbook single-page birthday site: hero countdown, polaroid journey uploads, music upload widget, envelopes, and grand finale reveal",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-12",
+      "text": "Convert the experience into a single-page layout with vertically stacked sections (Hero → The Journey → Music Toggle → The Tease → The Grand Finale) and smooth scrolling between sections, while keeping the existing romantic scrapbook theme, tap hearts, and confetti effects.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "Create a romantic, playful, and interactive single-page birthday website... Use a 'modern scrapbook' aesthetic...",
+          "The structure should include: * Hero Section ... * The Journey ... * Music Toggle ... * The Tease ... * The Grand Finale ..."
+        ]
+      },
+      "acceptanceCriteria": [
+        "All sections render on one route/page without switching to separate screens for each step.",
+        "Primary CTAs scroll smoothly to the next relevant section (e.g., Hero CTA scrolls to The Journey).",
+        "Mobile-first spacing and typography remain readable with no horizontal overflow."
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Implement the Hero section with: (1) headline text exactly: \"Wait... did I forget something today?\" (2) a countdown timer to a configurable target date/time (default can be set in code), and (3) a button labeled exactly: \"Click for a hint.\" The hint button must reveal a playful hint message and/or scroll to the next section.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "Hero Section: A big, teasing headline like 'Wait... did I forget something today?' with a countdown timer and a button that says 'Click for a hint.'"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Hero shows the exact headline string and a live-updating countdown (days/hours/minutes/seconds).",
+        "Countdown target date/time is easy to change in one place in code.",
+        "Clicking \"Click for a hint\" reveals a hint interaction (inline, modal, or toast) and provides an obvious next-step action (e.g., scroll to The Journey)."
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Build \"The Journey\" section as an alternating layout of long, heartfelt paragraphs and polaroid-style photo cards. Each polaroid card must allow the user to upload/replace an image from their device and optionally edit a caption/text block associated with that image.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "The Journey: Interactive 'polaroid' image placeholders where I can upload our photos, alternating with long, heartfelt, and emotional paragraphs of text."
+        ]
+      },
+      "acceptanceCriteria": [
+        "At least 4 polaroid placeholders are shown by default with a clear upload/replace affordance.",
+        "Uploading an image immediately previews it in the polaroid frame.",
+        "Each polaroid supports a caption/message text field that is editable in the UI (client-side).",
+        "The layout alternates text/photo rhythm down the page (not all photos grouped together)."
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Add “cute & teasing” paragraph content patterns into The Journey text blocks, including at least one visible “Fake Out” paragraph that starts with a complaint and pivots into affection, matching the user’s example style and keeping the overall tone romantic, playful, and teasing.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "Tips to make it \"Cute & Teasing\"... * The \"Fake Out\": Start a paragraph with something like, \"I was going to write about how annoying it is when you steal the covers...\" then pivot into \"...but then I realized I wouldn't want to be cold with anyone else.\""
+        ]
+      },
+      "acceptanceCriteria": [
+        "The Journey includes at least one paragraph that clearly follows the “Fake Out” structure (complaint → affectionate pivot).",
+        "Paragraphs are long-form and emotional overall, not just short one-liners."
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "text": "Replace/extend the existing music control with a stylish floating music player widget that supports selecting/uploading an audio file from the user’s device and toggling playback (play/pause and mute/unmute). Audio must begin only after a user gesture, loop when enabled, and gently fade in when starting.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "Music Toggle: A stylish floating music player widget so I can upload our song."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Music widget is floating and visible across the whole single-page experience.",
+        "User can choose an audio file locally and play it back (no server upload required).",
+        "Playback does not start automatically without a user gesture.",
+        "When playback starts, volume fades in smoothly; when stopped/muted, volume change is not abrupt.",
+        "Looping behavior is enabled (or clearly togglable)."
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "text": "Implement \"The Tease\" section with a grid/list of \"Open Me\" envelope cards that reveal inside jokes or reasons (text snippets) on interaction. On mobile, tap should open/close the envelope; on desktop, hover should preview/open with a clear animated affordance.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "The Tease: Include 'Open Me' envelopes that reveal cute inside jokes or reasons why I love her when hovered over."
+        ]
+      },
+      "acceptanceCriteria": [
+        "At least 6 envelope cards appear with the label “Open Me”.",
+        "Tap toggles open/closed state on touch devices; hover interaction works on desktop without breaking tap behavior.",
+        "Reveal animation feels like an envelope opening (flap + note reveal or similar).",
+        "Envelope reveal content is editable in code as a simple list/array of strings."
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "text": "Implement the Grand Finale section at the bottom with a button labeled exactly: \"Don't Click This\" that triggers a full-screen confetti explosion and reveals: (1) a prominent \"Happy Birthday\" message and (2) a “digital coupon for a date night” style surprise card with customizable coupon text.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "The Grand Finale: A 'Don't Click This' button at the bottom that triggers a full-screen confetti explosion and a 'Happy Birthday' message with a final surprise reveal (like a digital coupon for a date night)."
+        ]
+      },
+      "acceptanceCriteria": [
+        "The bottom section contains the exact “Don't Click This” label.",
+        "Clicking it triggers a full-screen confetti effect that is visually denser/more intense than the light confetti used elsewhere.",
+        "After the click, “Happy Birthday” is clearly displayed and the coupon card is revealed.",
+        "Coupon content is easily editable in one place in code (e.g., title, fine print, redemption note)."
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "text": "Add an optional password-protected surprise within/after the Grand Finale: show a password input that unlocks hidden content when the entered password matches a configurable value (e.g., birthday or anniversary). The unlocked content must support showing an embedded video message (via a user-provided video URL) or a placeholder panel if no URL is set.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "The Surprise at the End: ... add a section ... password-protected ... the password is her birthday or your anniversary, leading to a video message from you."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Password gate can be enabled/disabled via a simple boolean/config in code.",
+        "When enabled, hidden content is not visible until the correct password is entered.",
+        "Password value is configurable in one place in code.",
+        "Unlocked area can render a video embed if a URL is provided, otherwise shows a friendly placeholder."
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "text": "Add an optional “Our Spots” section that shows a simple interactive “pinned spots” visualization without using external map/GPS services: display a stylized card with a faux-map/illustrated background and clickable pins; each pin opens a small popover with a title and short note (e.g., “First date”). Pins and text must be configurable in code.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "The Interactive Map: If the builder allows, add a section called \"Our Spots\" where you pin the place you first met or had your first date."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Section can be enabled/disabled via config.",
+        "At least 2 pins render by default and are clickable/tappable.",
+        "Clicking a pin reveals its title and note in a popover/callout.",
+        "No external map libraries/APIs or geolocation are used."
+      ]
+    },
+    {
+      "id": "REQ-21",
+      "text": "Ensure the overall UI consistently follows a “modern scrapbook” aesthetic: soft pastel palette (not default blue/purple), elegant typography, subtle paper/grain texture feel, polaroid frames, sticker-like accents, and subtle floating heart animations that do not obscure content.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "Use a 'modern scrapbook' aesthetic with soft pastel colors, elegant typography, and subtle floating heart animations."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Visual styling is consistent across all sections (same design language for cards, buttons, headings).",
+        "Subtle texture/paper feel is visible in at least the main background and/or section cards.",
+        "Floating hearts/particles remain subtle and do not block taps/clicks on controls."
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "text": "Add the generated static images (see image requirements) under frontend/public/assets/generated and use them in the UI as decorative scrapbook elements (background paper texture, tape/stickers, envelope illustration accents) without fetching them from the backend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "Use a 'modern scrapbook' aesthetic with soft pastel colors..."
+        ]
+      },
+      "acceptanceCriteria": [
+        "All required generated images exist under frontend/public/assets/generated with the exact filenames specified.",
+        "UI references these assets via static paths and does not attempt to load them via backend calls.",
+        "At least one texture asset and one sticker/tape asset are visibly used in the page design."
+      ]
+    }
+  ],
+  "constraints": [
+    "Frontend: do not modify any files under frontend/src/components/ui or any immutable paths listed in SYSTEM_CONTEXT.",
+    "Backend: keep all Motoko logic inside the single actor at backend/main.mo; add backend/migration.mo only if existing stable state needs upgrade.",
+    "Use English for all user-facing text.",
+    "Do not introduce external map APIs, geolocation features, third-party auth providers, or non-supported backend stacks."
+  ],
+  "nonGoals": [
+    "Implementing a real-world map with tiles, GPS, or external mapping providers.",
+    "Adding third-party authentication beyond Internet Identity.",
+    "Storing uploaded photos/audio in an external database or external storage provider.",
+    "Real-time/multiplayer/shared editing or sharing features."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Seamless pastel paper texture with subtle grain (scrapbook-paper-texture.dim_2048x2048.png)",
+      "Set of 6 pastel washi tape strips, each a separate sticker-like element on transparent background (washi-tape-set.dim_1600x1000.png)",
+      "Polaroid frame sticker with soft shadow on transparent background (polaroid-frame-sticker.dim_1200x1200.png)",
+      "Cute envelope illustration (closed) in pastel style on transparent background (envelope-closed.dim_1024x1024.png)",
+      "Cute envelope illustration (open with note peeking) in pastel style on transparent background (envelope-open.dim_1024x1024.png)",
+      "Small heart doodle sticker pack (10 assorted hearts) on transparent background (heart-doodle-pack.dim_1400x1400.png)"
+    ],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

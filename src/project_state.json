@@ -1,0 +1,301 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Mobile-first romantic, playful single-page birthday website with a modern scrapbook aesthetic (pastel colors, elegant typography, floating hearts), featuring a hero teaser with countdown, polaroid-style photo journey with heartfelt text, music upload/toggle widget, interactive envelopes reveals, and a grand finale with confetti + Happy Birthday + date-night coupon (optionally password-protected video surprise and an 'Our Spots' pinned map).",
+  "architectural_notes": [
+    "Ensure background audio only starts after an explicit user interaction (e.g., first tap) to comply with mobile browser autoplay restrictions.",
+    "Prioritize mobile-first interactions: swipe gestures for gallery, tap targets sized for thumbs, and lightweight animations for performance.",
+    "Design interactions mobile-first: avoid hover-only mechanics; use tap-to-open with optional hover enhancements for desktop.",
+    "Countdown timer should define timezone/target date clearly and update smoothly without heavy battery drain (e.g., 1s interval).",
+    "If implementing password protection client-side, treat it as a light gate (obfuscation) rather than secure authentication; avoid storing sensitive secrets."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Seamless pastel paper texture with subtle grain (scrapbook-paper-texture.dim_2048x2048.png)\n- Set of 6 pastel washi tape strips, each a separate sticker-like element on transparent background (washi-tape-set.dim_1600x1000.png)\n- Polaroid frame sticker with soft shadow on transparent background (polaroid-frame-sticker.dim_1200x1200.png)\n- Cute envelope illustration (closed) in pastel style on transparent background (envelope-closed.dim_1024x1024.png)\n- Cute envelope illustration (open with note peeking) in pastel style on transparent background (envelope-open.dim_1024x1024.png)\n- Small heart doodle sticker pack (10 assorted hearts) on transparent background (heart-doodle-pack.dim_1400x1400.png)",
+  "existing_features": [
+    {
+      "id": "feature-convert-the-experience-into-a-single-page-layout-with-vertically-stacked-sections-hero-the-journey-music-toggle-the-tease-the-grand-finale-and-smooth-scrolling-between-sections-while-keeping-the-existing-romantic-scrapbook-theme-tap-hearts-and-confetti-effects",
+      "title": "Convert the experience into a single-page layout with vertically stacked sections (Hero → The Journey → Music Toggle → The Tease → The Grand Finale) and smooth scrolling between sections, while keeping the existing romantic scrapbook theme, tap hearts, and confetti effects.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-hero-section-with-1-headline-text-exactly-wait-did-i-forget-something-today-2-a-countdown-timer-to-a-configurable-target-date-time-default-can-be-set-in-code-and-3-a-button-labeled-exactly-click-for-a-hint-the-hint-button-must-reveal-a-playful-hint-message-and-or-scroll-to-the-next-section",
+      "title": "Implement the Hero section with: (1) headline text exactly: \"Wait... did I forget something today?\" (2) a countdown timer to a configurable target date/time (default can be set in code), and (3) a button labeled exactly: \"Click for a hint.\" The hint button must reveal a playful hint message and/or scroll to the next section.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-the-journey-section-as-an-alternating-layout-of-long-heartfelt-paragraphs-and-polaroid-style-photo-cards-each-polaroid-card-must-allow-the-user-to-upload-replace-an-image-from-their-device-and-optionally-edit-a-caption-text-block-associated-with-that-image",
+      "title": "Build \"The Journey\" section as an alternating layout of long, heartfelt paragraphs and polaroid-style photo cards. Each polaroid card must allow the user to upload/replace an image from their device and optionally edit a caption/text block associated with that image.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-cute-teasing-paragraph-content-patterns-into-the-journey-text-blocks-including-at-least-one-visible-fake-out-paragraph-that-starts-with-a-complaint-and-pivots-into-affection-matching-the-user-s-example-style-and-keeping-the-overall-tone-romantic-playful-and-teasing",
+      "title": "Add “cute & teasing” paragraph content patterns into The Journey text blocks, including at least one visible “Fake Out” paragraph that starts with a complaint and pivots into affection, matching the user’s example style and keeping the overall tone romantic, playful, and teasing.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-extend-the-existing-music-control-with-a-stylish-floating-music-player-widget-that-supports-selecting-uploading-an-audio-file-from-the-user-s-device-and-toggling-playback-play-pause-and-mute-unmute-audio-must-begin-only-after-a-user-gesture-loop-when-enabled-and-gently-fade-in-when-starting",
+      "title": "Replace/extend the existing music control with a stylish floating music player widget that supports selecting/uploading an audio file from the user’s device and toggling playback (play/pause and mute/unmute). Audio must begin only after a user gesture, loop when enabled, and gently fade in when starting.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-tease-section-with-a-grid-list-of-open-me-envelope-cards-that-reveal-inside-jokes-or-reasons-text-snippets-on-interaction-on-mobile-tap-should-open-close-the-envelope-on-desktop-hover-should-preview-open-with-a-clear-animated-affordance",
+      "title": "Implement \"The Tease\" section with a grid/list of \"Open Me\" envelope cards that reveal inside jokes or reasons (text snippets) on interaction. On mobile, tap should open/close the envelope; on desktop, hover should preview/open with a clear animated affordance.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-grand-finale-section-at-the-bottom-with-a-button-labeled-exactly-don-t-click-this-that-triggers-a-full-screen-confetti-explosion-and-reveals-1-a-prominent-happy-birthday-message-and-2-a-digital-coupon-for-a-date-night-style-surprise-card-with-customizable-coupon-text",
+      "title": "Implement the Grand Finale section at the bottom with a button labeled exactly: \"Don't Click This\" that triggers a full-screen confetti explosion and reveals: (1) a prominent \"Happy Birthday\" message and (2) a “digital coupon for a date night” style surprise card with customizable coupon text.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-optional-password-protected-surprise-within-after-the-grand-finale-show-a-password-input-that-unlocks-hidden-content-when-the-entered-password-matches-a-configurable-value-e-g-birthday-or-anniversary-the-unlocked-content-must-support-showing-an-embedded-video-message-via-a-user-provided-video-url-or-a-placeholder-panel-if-no-url-is-set",
+      "title": "Add an optional password-protected surprise within/after the Grand Finale: show a password input that unlocks hidden content when the entered password matches a configurable value (e.g., birthday or anniversary). The unlocked content must support showing an embedded video message (via a user-provided video URL) or a placeholder panel if no URL is set.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-optional-our-spots-section-that-shows-a-simple-interactive-pinned-spots-visualization-without-using-external-map-gps-services-display-a-stylized-card-with-a-faux-map-illustrated-background-and-clickable-pins-each-pin-opens-a-small-popover-with-a-title-and-short-note-e-g-first-date-pins-and-text-must-be-configurable-in-code",
+      "title": "Add an optional “Our Spots” section that shows a simple interactive “pinned spots” visualization without using external map/GPS services: display a stylized card with a faux-map/illustrated background and clickable pins; each pin opens a small popover with a title and short note (e.g., “First date”). Pins and text must be configurable in code.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-overall-ui-consistently-follows-a-modern-scrapbook-aesthetic-soft-pastel-palette-not-default-blue-purple-elegant-typography-subtle-paper-grain-texture-feel-polaroid-frames-sticker-like-accents-and-subtle-floating-heart-animations-that-do-not-obscure-content",
+      "title": "Ensure the overall UI consistently follows a “modern scrapbook” aesthetic: soft pastel palette (not default blue/purple), elegant typography, subtle paper/grain texture feel, polaroid frames, sticker-like accents, and subtle floating heart animations that do not obscure content.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-generated-static-images-see-image-requirements-under-frontend-public-assets-generated-and-use-them-in-the-ui-as-decorative-scrapbook-elements-background-paper-texture-tape-stickers-envelope-illustration-accents-without-fetching-them-from-the-backend",
+      "title": "Add the generated static images (see image requirements) under frontend/public/assets/generated and use them in the UI as decorative scrapbook elements (background paper texture, tape/stickers, envelope illustration accents) without fetching them from the backend.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Mobile-first UI/UX with big readable text, soft spacing, smooth scrolling, and tap-friendly controls",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Background romantic/lofi music that starts on first user tap, loops, fades in, with floating mute/unmute heart button",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Landing screen with teasing intro copy and primary CTA button plus small teasing note",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Long love-letter section rendered with typing animation and mixed emotional + teasing lines",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Scroll-triggered teasing pop-ups and playful button interactions that lead to a reveal message",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Memory Lane swipe-based mobile photo gallery with tap-to-reveal captions and smooth zoom-in animation",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Naughty surprise buttons that reveal messages and trigger light confetti animation",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Final emotional end section with screen dim, softened music, slow fade-in text, and final tap-to-reveal message",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Cute mobile extras: floating hearts on taps, optional vibration feedback, replay button, and end-screen screenshot prompt",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Create a mobile-first single-page experience with smooth vertical scrolling between clearly separated sections: Landing → Love Letter → Teasing Pop-ups → Memory Lane Gallery → Naughty Surprise Buttons → Final Emotional Surprise → End Screen.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Implement the Landing Screen with the provided teasing copy, a primary CTA button, and a small teasing note under the button. The CTA advances the user into the experience (scroll or transition to the Love Letter section).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add background music support: load a romantic/lofi track as a static asset, start playback on the first user interaction (first tap anywhere or on the CTA), fade in volume subtly, loop continuously, and provide a floating heart-shaped mute/unmute control that persists across sections.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Create the Long Love Letter section with a typing animation that reveals multiple long, emotional paragraphs and includes the provided teasing lines verbatim. The typing effect should be smooth, readable, and mobile-friendly (no tiny text; comfortable line height).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Implement the Extra Teasing Section with scroll-triggered pop-ups that appear as the user progresses. Include interactive buttons “Click if you love me” and “Click if you’re blushing”; either button triggers the same reveal message: “Haha, caught you 😏💕”.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Build the Memory Lane section as a mobile swipe-based photo gallery. Support horizontal swipe gestures to move between photos, tap a photo to reveal its message, and apply a smooth zoom-in animation on tap. Provide a simple way to supply photo URLs later (placeholders may be used initially).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add the Naughty Surprise Buttons section with buttons labeled “Do NOT click this 👀” and “Last warning 😈”. Each button reveals its respective message on tap and triggers a light confetti animation each time a reveal happens.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Implement the Final Emotional Surprise section: dim the screen slightly, soften the music volume while this section is active, fade in the provided text slowly, show a final button “One last thing 💝”, and on tap reveal “I love you more than you’ll ever know.”",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Add “Cute Mobile Extras”: floating hearts that spawn where the user taps (and gently float/fade), optional vibration feedback on surprise interactions when supported by the device/browser, a “Replay the magic ✨” control that resets the experience to the beginning (including UI state), and an end-screen message: “Screenshot this. I know you want to.”",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Establish a coherent, playful romantic visual theme (colors, typography, spacing, and micro-interactions) that is consistent across all sections and optimized for a cozy mobile feel (avoid default/unstyled template look).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add the required generated images as static assets under frontend/public/assets/generated and use them in the UI (background decoration, confetti/particles, stickers) without fetching them from the backend.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Adopt a 'modern scrapbook' aesthetic: soft pastel palette, elegant typography, subtle paper/grain textures, and polaroid-style frames consistent across sections",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Hero section with teasing headline, a countdown timer to the birthday (or a target date), and a 'Click for a hint' CTA that advances into the experience",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Build 'The Journey' as alternating long heartfelt paragraphs and polaroid-style image placeholders supporting user photo uploads (or easy photo replacement)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Replace/extend music support with a stylish floating music player widget that allows uploading/choosing a song (user-provided audio) and toggling playback",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Add 'Open Me' envelope interactions that reveal inside jokes/reasons on interaction (tap-to-open for mobile; hover enhancement for desktop)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Grand Finale section: 'Don’t Click This' button triggers full-screen confetti explosion and reveals 'Happy Birthday' plus a final surprise (digital date-night coupon)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Optional 'Our Spots' section: simple interactive map with pinned meaningful locations (first met/first date)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Optional password-protected final surprise: user enters a password (birthday/anniversary) to unlock a hidden section (e.g., embedded video message)",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Modern scrapbook romantic interactive birthday single-page website",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

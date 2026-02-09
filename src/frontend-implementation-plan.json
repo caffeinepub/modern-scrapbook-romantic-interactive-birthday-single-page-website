@@ -1,0 +1,349 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Modern scrapbook single-page birthday site (sections, uploads, envelopes, music, finale, surprise, spots)",
+  "requirements": [
+    {
+      "id": "REQ-12",
+      "summary": "Convert the experience into a single-page, vertically stacked section layout with smooth scrolling while preserving scrapbook theme, tap hearts, and confetti.",
+      "acceptanceCriteria": [
+        "All sections render on one route/page without switching to separate screens for each step.",
+        "Primary CTAs scroll smoothly to the next relevant section (e.g., Hero CTA scrolls to The Journey).",
+        "Mobile-first spacing and typography remain readable with no horizontal overflow."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Replace the current multi-screen section switching with a single-page composition that renders all required sections in order, keeps FloatingHearts active, and wires smooth-scroll CTAs between section anchors."
+        },
+        {
+          "path": "frontend/src/pages/ScrapbookSinglePage.tsx",
+          "operation": "create",
+          "description": "Create the single-page container with vertically stacked sections (Hero → The Journey → Music Toggle → The Tease → The Grand Finale), section refs/IDs, and shared smooth-scroll helpers. Use shadcn-ui primitives (e.g., Button) for consistent UI; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add global single-page scroll behavior (e.g., smooth scrolling) and utility styles supporting section spacing and overflow safety for mobile-first layouts, without touching immutable UI component files."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Implement the Hero section with exact headline text, a configurable live countdown, and a “Click for a hint” interaction that reveals a hint and/or scrolls onward.",
+      "acceptanceCriteria": [
+        "Hero shows the exact headline string and a live-updating countdown (days/hours/minutes/seconds).",
+        "Countdown target date/time is easy to change in one place in code.",
+        "Clicking \"Click for a hint\" reveals a hint interaction (inline, modal, or toast) and provides an obvious next-step action (e.g., scroll to The Journey)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/config/scrapbookConfig.ts",
+          "operation": "create",
+          "description": "Add a single configuration module for the experience (including the countdown target date/time and hero hint content) so the target is easy to edit in one place."
+        },
+        {
+          "path": "frontend/src/components/sections/HeroSection.tsx",
+          "operation": "create",
+          "description": "Create the Hero section with headline exactly \"Wait... did I forget something today?\", a live countdown timer, and a button labeled exactly \"Click for a hint.\" Use shadcn-ui components (e.g., Button) and sonner toast/modal patterns for the hint interaction; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ScrapbookSinglePage.tsx",
+          "operation": "modify",
+          "description": "Wire HeroSection into the page and connect the hint interaction to smooth-scroll to The Journey section (and/or reveal inline hint)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Build The Journey as alternating long-form text blocks and polaroid-style cards with client-side image upload/replace and editable captions.",
+      "acceptanceCriteria": [
+        "At least 4 polaroid placeholders are shown by default with a clear upload/replace affordance.",
+        "Uploading an image immediately previews it in the polaroid frame.",
+        "Each polaroid supports a caption/message text field that is editable in the UI (client-side).",
+        "The layout alternates text/photo rhythm down the page (not all photos grouped together)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/sections/JourneySection.tsx",
+          "operation": "create",
+          "description": "Create The Journey section implementing an alternating layout of long paragraphs and at least 4 polaroid upload cards. Implement client-side preview via File input + object URLs and editable caption fields. Use shadcn-ui Input/Textarea/Button for controls; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/journey/PolaroidCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable polaroid-style card component that supports upload/replace, image preview, and caption editing. Use the generated polaroid frame asset as a decorative overlay and provide an obvious upload affordance. Use shadcn-ui components where helpful; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ScrapbookSinglePage.tsx",
+          "operation": "modify",
+          "description": "Wire JourneySection into the single-page flow immediately after Hero, and ensure its layout alternates text and polaroids down the page."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Add cute & teasing long-form Journey paragraphs including at least one visible “Fake Out” paragraph (complaint → affectionate pivot).",
+      "acceptanceCriteria": [
+        "The Journey includes at least one paragraph that clearly follows the “Fake Out” structure (complaint → affectionate pivot).",
+        "Paragraphs are long-form and emotional overall, not just short one-liners."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/config/scrapbookConfig.ts",
+          "operation": "modify",
+          "description": "Add Journey long-form paragraph content into config, including at least one clearly structured “Fake Out” paragraph (complaint → affectionate pivot), keeping the overall romantic scrapbook tone."
+        },
+        {
+          "path": "frontend/src/components/sections/JourneySection.tsx",
+          "operation": "modify",
+          "description": "Read Journey paragraph content from config and render it as alternating text blocks among the polaroid cards, ensuring long-form readability on mobile."
+        }
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "summary": "Replace/extend music controls with a floating music widget that allows local audio file selection and play/pause + mute/unmute with user-gesture start, looping, and gentle fade in/out.",
+      "acceptanceCriteria": [
+        "Music widget is floating and visible across the whole single-page experience.",
+        "User can choose an audio file locally and play it back (no server upload required).",
+        "Playback does not start automatically without a user gesture.",
+        "When playback starts, volume fades in smoothly; when stopped/muted, volume change is not abrupt.",
+        "Looping behavior is enabled (or clearly togglable)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/MusicPlayer.tsx",
+          "operation": "modify",
+          "description": "Refactor the floating music widget to support local audio file selection (no backend), play/pause and mute/unmute controls, loop (enabled or togglable), and smooth fade-in/fade-out volume transitions. Keep playback gated behind explicit user gestures. Use shadcn-ui Button/Input and keep the widget visible across the single-page; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ScrapbookSinglePage.tsx",
+          "operation": "modify",
+          "description": "Add/verify a dedicated “Music Toggle” section in the stacked layout that introduces the widget and can scroll users to it, while the widget itself remains floating across sections."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Ensure the updated floating MusicPlayer is mounted for the entire single-page experience (not tied to multi-screen state), and that initial playback only occurs after user action."
+        }
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "summary": "Implement The Tease section with at least 6 interactive “Open Me” envelope cards (tap toggle on mobile, hover preview/open on desktop) and editable reveal strings in code.",
+      "acceptanceCriteria": [
+        "At least 6 envelope cards appear with the label “Open Me”.",
+        "Tap toggles open/closed state on touch devices; hover interaction works on desktop without breaking tap behavior.",
+        "Reveal animation feels like an envelope opening (flap + note reveal or similar).",
+        "Envelope reveal content is editable in code as a simple list/array of strings."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/config/scrapbookConfig.ts",
+          "operation": "modify",
+          "description": "Add a simple array/list of envelope reveal strings (inside jokes/reasons) to be used by The Tease section so content is easily editable in code."
+        },
+        {
+          "path": "frontend/src/components/tease/EnvelopeCard.tsx",
+          "operation": "create",
+          "description": "Create an interactive envelope card component labeled “Open Me” that supports tap-to-toggle open/close on touch devices and hover-to-preview/open on desktop with an envelope-opening animation. Use the generated envelope images as the closed/open visuals. Use shadcn-ui primitives if needed (e.g., Card/Button); verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/sections/TeaseSection.tsx",
+          "operation": "create",
+          "description": "Create The Tease section as a responsive grid/list of at least 6 EnvelopeCard instances, wired to the reveal strings from config, with appropriate mobile/desktop interaction behavior."
+        },
+        {
+          "path": "frontend/src/pages/ScrapbookSinglePage.tsx",
+          "operation": "modify",
+          "description": "Wire TeaseSection into the single-page flow after the Music section and before the Grand Finale, ensuring it is reachable via smooth scroll."
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Implement the Grand Finale section with exact “Don't Click This” button that triggers intense full-screen confetti and reveals Happy Birthday + a customizable date-night coupon card.",
+      "acceptanceCriteria": [
+        "The bottom section contains the exact “Don't Click This” label.",
+        "Clicking it triggers a full-screen confetti effect that is visually denser/more intense than the light confetti used elsewhere.",
+        "After the click, “Happy Birthday” is clearly displayed and the coupon card is revealed.",
+        "Coupon content is easily editable in one place in code (e.g., title, fine print, redemption note)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/config/scrapbookConfig.ts",
+          "operation": "modify",
+          "description": "Add editable coupon content (title/body/fine print/redemption note) in one place so the Grand Finale card can be customized without hunting through UI code."
+        },
+        {
+          "path": "frontend/src/components/Confetti.tsx",
+          "operation": "modify",
+          "description": "Extend Confetti to support an 'intensity' or 'piece count' mode so the Grand Finale can trigger a denser, more intense full-screen confetti effect than the subtle confetti used elsewhere."
+        },
+        {
+          "path": "frontend/src/components/sections/GrandFinaleSection.tsx",
+          "operation": "create",
+          "description": "Create the Grand Finale bottom section with a button labeled exactly \"Don't Click This\" that triggers intense full-screen confetti and reveals a prominent “Happy Birthday” message plus a 'digital coupon' surprise card (content from config). Use shadcn-ui components for buttons/cards; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ScrapbookSinglePage.tsx",
+          "operation": "modify",
+          "description": "Wire GrandFinaleSection as the last section in the single-page stack and ensure any prior CTA can scroll to it."
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Add an optional password-protected surprise after/within the Grand Finale that unlocks hidden content and supports a video embed via configurable URL (or a placeholder).",
+      "acceptanceCriteria": [
+        "Password gate can be enabled/disabled via a simple boolean/config in code.",
+        "When enabled, hidden content is not visible until the correct password is entered.",
+        "Password value is configurable in one place in code.",
+        "Unlocked area can render a video embed if a URL is provided, otherwise shows a friendly placeholder."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/config/scrapbookConfig.ts",
+          "operation": "modify",
+          "description": "Add config toggles and values for the optional password gate: enable/disable boolean, password value, and optional video URL."
+        },
+        {
+          "path": "frontend/src/components/surprise/PasswordGate.tsx",
+          "operation": "create",
+          "description": "Create a password gate component that, when enabled, hides its children until the correct password is entered. Use shadcn-ui Input/Button and provide accessible error feedback; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/surprise/VideoMessagePanel.tsx",
+          "operation": "create",
+          "description": "Create a panel that renders an embedded video when a URL is configured, otherwise shows a friendly placeholder panel (no hidden content leakage when locked)."
+        },
+        {
+          "path": "frontend/src/components/sections/GrandFinaleSection.tsx",
+          "operation": "modify",
+          "description": "Wire the optional password-protected surprise into/after the finale reveal using PasswordGate and VideoMessagePanel, controlled entirely via config."
+        }
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "summary": "Add an optional “Our Spots” section showing a faux-map background with clickable pins and configurable popover text, without external maps/GPS.",
+      "acceptanceCriteria": [
+        "Section can be enabled/disabled via config.",
+        "At least 2 pins render by default and are clickable/tappable.",
+        "Clicking a pin reveals its title and note in a popover/callout.",
+        "No external map libraries/APIs or geolocation are used."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/config/scrapbookConfig.ts",
+          "operation": "modify",
+          "description": "Add an enable/disable flag for “Our Spots” plus a default list of at least 2 pins (title, note, and relative position coordinates) to keep content configurable in code."
+        },
+        {
+          "path": "frontend/src/components/sections/OurSpotsSection.tsx",
+          "operation": "create",
+          "description": "Create the optional “Our Spots” section with a stylized faux-map/illustrated card background and clickable/tappable pins that open a popover/callout showing each pin’s title and note. Use shadcn-ui Popover (or equivalent) for callouts; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ScrapbookSinglePage.tsx",
+          "operation": "modify",
+          "description": "Conditionally render OurSpotsSection based on config and place it in the single-page flow (without creating new routes)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-21",
+      "summary": "Ensure the UI consistently follows a modern scrapbook aesthetic (pastels, elegant typography, paper texture, polaroids, stickers, subtle hearts) without obscuring content.",
+      "acceptanceCriteria": [
+        "Visual styling is consistent across all sections (same design language for cards, buttons, headings).",
+        "Subtle texture/paper feel is visible in at least the main background and/or section cards.",
+        "Floating hearts/particles remain subtle and do not block taps/clicks on controls."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Adjust global styling tokens and add scrapbook-specific utilities (paper/grain background treatment, sticker-like shadows, gentle animation timing) while keeping a soft pastel palette and ensuring no horizontal overflow on mobile."
+        },
+        {
+          "path": "frontend/src/components/FloatingHearts.tsx",
+          "operation": "modify",
+          "description": "Tune floating heart visuals and behavior to remain subtle and non-blocking (pointer-events none already), ensuring particles do not obscure controls and remain appropriate for the scrapbook theme."
+        },
+        {
+          "path": "frontend/src/components/journey/PolaroidCard.tsx",
+          "operation": "modify",
+          "description": "Enhance the polaroid look (frame overlay, subtle shadow, optional washi tape accents) to reinforce consistent scrapbook styling across the Journey section."
+        },
+        {
+          "path": "frontend/src/components/tease/EnvelopeCard.tsx",
+          "operation": "modify",
+          "description": "Apply consistent scrapbook styling (paper feel, sticker-like accents, soft shadows) and ensure hover/tap affordances feel playful but readable."
+        },
+        {
+          "path": "frontend/src/components/sections/GrandFinaleSection.tsx",
+          "operation": "modify",
+          "description": "Apply consistent scrapbook styling to the finale reveal, including coupon card design that matches the rest of the site’s typography and pastel/paper treatment."
+        }
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "summary": "Add required generated static images under frontend/public/assets/generated and use them as decorative scrapbook elements via static paths (no backend fetching).",
+      "acceptanceCriteria": [
+        "All required generated images exist under frontend/public/assets/generated with the exact filenames specified.",
+        "UI references these assets via static paths and does not attempt to load them via backend calls.",
+        "At least one texture asset and one sticker/tape asset are visibly used in the page design."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/scrapbook-paper-texture.dim_2048x2048.png",
+          "operation": "create",
+          "description": "Add the generated asset file at the exact path/filename so it can be referenced as a static decorative texture in the UI."
+        },
+        {
+          "path": "frontend/public/assets/generated/washi-tape-set.dim_1600x1000.png",
+          "operation": "create",
+          "description": "Add the generated asset file at the exact path/filename so it can be used as tape/sticker accents in polaroids/cards."
+        },
+        {
+          "path": "frontend/public/assets/generated/polaroid-frame-sticker.dim_1200x1200.png",
+          "operation": "create",
+          "description": "Add the generated asset file at the exact path/filename so it can be used as the polaroid frame overlay in Journey polaroid cards."
+        },
+        {
+          "path": "frontend/public/assets/generated/envelope-closed.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated asset file at the exact path/filename so it can be used as the closed envelope visual in The Tease cards."
+        },
+        {
+          "path": "frontend/public/assets/generated/envelope-open.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated asset file at the exact path/filename so it can be used as the open envelope visual in The Tease cards."
+        },
+        {
+          "path": "frontend/public/assets/generated/heart-doodle-pack.dim_1400x1400.png",
+          "operation": "create",
+          "description": "Add the generated asset file at the exact path/filename so it can be used as decorative heart doodle stickers across sections."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Wire the static texture/background usage by referencing frontend/public/assets/generated/scrapbook-paper-texture.dim_2048x2048.png in global styles (static asset path) and ensure it is visibly present without backend calls."
+        },
+        {
+          "path": "frontend/src/components/journey/PolaroidCard.tsx",
+          "operation": "modify",
+          "description": "Reference frontend/public/assets/generated/polaroid-frame-sticker.dim_1200x1200.png and frontend/public/assets/generated/washi-tape-set.dim_1600x1000.png as decorative overlays/accents for the polaroid cards (static assets only; no backend fetching)."
+        },
+        {
+          "path": "frontend/src/components/tease/EnvelopeCard.tsx",
+          "operation": "modify",
+          "description": "Reference frontend/public/assets/generated/envelope-closed.dim_1024x1024.png and frontend/public/assets/generated/envelope-open.dim_1024x1024.png for envelope visuals (static assets only; no backend fetching)."
+        }
+      ]
+    }
+  ]
+}
